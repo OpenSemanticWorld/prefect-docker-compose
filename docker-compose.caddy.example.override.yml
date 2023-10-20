@@ -1,0 +1,28 @@
+# this files shows how to use caddy as a reverse proxy
+# requires https://github.com/lucaslorentz/caddy-docker-proxy
+# and a existing docker network 'caddy'
+
+version: '3.8'
+services:
+    #minio:
+    #    networks:
+    #        - default
+    #        - caddy
+    #    labels:
+    #        caddy: ${MW_SITE_SERVER}
+    #        caddy.reverse_proxy: "{{upstreams 9000}}"
+    #        caddy.request_body: 2g
+
+    server:
+        networks:
+            - default
+            - caddy
+        labels:
+            caddy: ${PREFECT_SERVER}
+            caddy.reverse_proxy: "{{upstreams 4200}}"
+
+        
+networks:
+  # Add caddy as an external network.
+  caddy:
+    external: true
